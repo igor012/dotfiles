@@ -18,7 +18,7 @@ plugins=(git vagrant archlinux colored-man cp systemd sudo tmux gem)
 
 
 # User configuration
-#export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/fab/.local/bin:/home/fab/Documents/tools:/sbin:/home/fab/.bin:/opt/logstash/bin:/home/fab/.gem/ruby/2.3.0/bin"
+export PATH="$PATH:/home/fab/.local/bin"
 source $ZSH/oh-my-zsh.sh
 source $HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim
 export LC_TIME="en_US.UTF-8"
