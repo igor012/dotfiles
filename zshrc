@@ -1,43 +1,33 @@
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
-stty -ixon
 
-ZSH_THEME="agnoster"
-DEFAULT_USER="fab"
-ENABLE_CORRECTION="true"
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export ZSH="$HOME/.oh-my-zsh"
+
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs aws)
+POWERLEVEL9K_MODE="awesome-fontconfig"
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+POWERLEVEL9K_SHORTEN_DELIMITER=""
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+ZSH_THEME="powerlevel9k/powerlevel9k"
+DEFAULT_USER=""
 HIST_STAMPS="mm/dd/yyyy"
 
-plugins=(git vagrant archlinux colored-man cp systemd sudo tmux gem)
+plugins=(
+   git docker brew cask docker-compose iterm2 terraform ansible zsh_reload kubectl aws
+)
 
-# Load lesspipe
-[ -x /usr/bin/lesspipe.sh  ] && eval "$(lesspipe.sh)"
-
-
-# Load ls colors
-[ -x /usr/bin/dircolors ] && eval "$(dircolors $HOME/.dircolors)"
-
+source $ZSH/oh-my-zsh.sh
 
 # User configuration
-export PATH="$PATH:/home/fab/.local/bin"
-source $ZSH/oh-my-zsh.sh
-source $HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim
-export LC_TIME="en_US.UTF-8"
-export TERM="xterm-256color"
-export LS_OPTIONS="--color"
-export LESSOPEN='|/usr/bin/lesspipe.sh %s'
-export LESS='-R'
-export VAGRANT_DEFAULT_PROVIDER="libvirt"
-export ARCHFLAGS="-arch x86_64"
-export VISUAL="vim"
+eval `gdircolors $HOME/.dircolors`
+eval "$(jump shell zsh)"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f /Users/fabien.carre/.travis/travis.sh ] && source ~/.travis/travis.sh
+[ -f ~/Documents/dotfiles/iterm2_shell_integration.zsh ] && source ~/Documents/dotfiles/iterm2_shell_integration.zsh
+[ -f ~/Documents/google-cloud-sdk/completion.zsh.inc ] && source ~/Documents/google-cloud-sdk/completion.zsh.inc
+source <(awless completion zsh)
 
-#GEM AND RUBY
-#export GEM_HOME=/home/fab/.gem/ruby/2.3.0
-#export GEM_PATH=/home/fab/.gem/ruby/2.3.0
-# SSH #
-#if [ -n "$DESKTOP_SESSION" ];then
-#    eval $(gnome-keyring-daemon --start --components=ssh)
-#    export SSH_AUTH_SOCK
-#fi
 
 alias ls='ls $LS_OPTIONS'
 alias l='ls -l'
