@@ -1,35 +1,50 @@
-
+###
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export ZSH="$HOME/.oh-my-zsh"
+export DOTFILES_HOME="$HOME/.dotfiles"
+export GOROOT="/usr/local/go"
+export GOPATH="$HOME/.go"
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs aws)
 POWERLEVEL9K_MODE="awesome-fontconfig"
+POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 POWERLEVEL9K_SHORTEN_DELIMITER=""
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 ZSH_THEME="powerlevel9k/powerlevel9k"
-DEFAULT_USER=""
 HIST_STAMPS="mm/dd/yyyy"
 
-plugins=(
-   git docker brew cask docker-compose iterm2 terraform ansible zsh_reload kubectl aws
-)
+
+case $OSTYPE in
+    linux*)  plugins=(git docker docker-compose terraform ansible zsh_reload kubectl aws)
+             eval `dircolors $DOTFILES_HOME/dircolors`
+             DEFAULT_USER="fab";;
+    darwin*) plugins=(git docker brew cask docker-compose iterm2 terraform ansible zsh_reload kubectl aws)
+             eval `gdircolors $DOTFILES_HOME/dircolors`
+             DEFAULT_USER="fab";;
+          *) plugins=(git zsh_reload);;
+esac
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-eval `gdircolors $HOME/.dircolors`
 eval "$(jump shell zsh)"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f /Users/fabien.carre/.travis/travis.sh ] && source ~/.travis/travis.sh
-[ -f ~/Documents/dotfiles/iterm2_shell_integration.zsh ] && source ~/Documents/dotfiles/iterm2_shell_integration.zsh
-[ -f ~/Documents/google-cloud-sdk/completion.zsh.inc ] && source ~/Documents/google-cloud-sdk/completion.zsh.inc
-source <(awless completion zsh)
+[ -f $DOTFILES_HOME/fzf.zsh ] && source $DOTFILES_HOME/fzf.zsh
+[ -f $DOTFILES_HOME/travis.sh ] && source $DOTFILES_HOME/travis.sh
+[ -f $DOTFILES_HOME/iterm2_shell_integration.zsh ] && source $DOTFILES_HOME/iterm2_shell_integration.zsh
+#[ -f $DOTFILES_HOME/google-cloud-sdk/completion.zsh.inc ] && source $DOTFILES_HOME/google-cloud-sdk/completion.zsh.inc
+[ -x "$(command -v awless)" ] && source <(awless completion zsh)
 
+if [ -x "$(command -v lsd)" ]; then
+    alias ls="lsd --icon never -l"
+else
+   export LS_OPTIONS="--color=auto"
+   alias ls='ls $LS_OPTIONS'
+fi
 
-alias ls='ls $LS_OPTIONS'
 alias l='ls -l'
 alias ll='ls -l'
 alias la='ls -la'
