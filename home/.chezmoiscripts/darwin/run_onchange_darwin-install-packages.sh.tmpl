@@ -1,0 +1,25 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -eufo pipefail
+
+brew bundle --file=/dev/stdin <<EOF
+brew "age"
+brew "bat"
+brew "direnv"
+brew "eza"
+brew "fzf"
+brew "gh"
+brew "helm"
+brew "httpie"
+brew "jq"
+brew "oh-my-posh"
+brew "tig"
+brew "tree"
+brew "zoxide"
+cask "monitorcontrol"
+cask "rectangle"
+cask "slack"
+cask "visual-studio-code"
+
+EOF
+{{ end -}}

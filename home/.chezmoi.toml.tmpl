@@ -1,0 +1,17 @@
+{{- $name := promptStringOnce . "name" "Name" -}}
+
+{{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $purpose := promptStringOnce . "purpose" "work or personal" -}}
+{{- $githubUser := promptStringOnce . "githubUser" "github username" -}}
+
+
+[data]
+    name        = {{ $name | quote }}
+    purpose     = {{ $purpose | quote}}
+    email       = {{ $email | quote }}
+    github_user = {{ $githubUser | quote }}
+
+
+[git]
+    autoCommit = true
+    autoPush = false

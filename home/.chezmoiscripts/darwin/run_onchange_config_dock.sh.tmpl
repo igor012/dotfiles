@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -eufo pipefail
+# remove old dock items
+
+defaults write com.apple.dock "orientation" -string "left"
+defaults write com.apple.dock "tilesize" -int "36"
+defaults write com.apple.dock "autohide" -bool "true"
+defaults write com.apple.dock "show-recents" -bool "false"
+
+# Hot corners
+defaults write com.apple.dock wvous-tl-corner -int 2
+killall Dock

@@ -1,0 +1,80 @@
+# Common Git configuration
+
+[user]
+	name = {{ .name | quote }}
+	email = {{ .email | quote }}
+
+[github]
+    user = {{ .github_user | quote }}
+
+[init]
+	defaultBranch = main
+[color]
+  ui = auto
+[alias]
+  main = checkout main
+  new  = checkout -b
+  go   = checkout -b
+  undo = reset --soft HEAD^
+  st = status -sb
+  ci = commit
+  br = branch
+  co = checkout
+  df = diff
+  caa = commit -a --amend -C HEAD
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  gup = pull --rebase
+  gst = status
+  gad = add
+  gco = commit -m
+  gdf = diff
+[help]
+  autocorrect = 5
+[core]
+  editor = vim
+  excludesfile = ~/.gitignore_global
+[push]
+  default = tracking
+[pull]
+  rebase = true
+[url "git@github.com:"]
+  insteadOf = "gh:"
+  pushInsteadOf = "github:"
+  pushInsteadOf = "git://github.com/"
+
+# Include the appropriate user config based on directory
+[includeIf "gitdir:~/Documents/perso/"]
+  path = .gitconfig-personal
+[includeIf "gitdir:~/.local/share/chezmoi/"]
+  path = .gitconfig-personal
+[includeIf "gitdir:~/Documents/work/"]
+  path = .gitconfig-professional
+
+[difftool "sourcetree"]
+  cmd = "'' "
+[mergetool "sourcetree"]
+  cmd = "'' "
+  trustExitCode = true
+[credential "https://dev.azure.com"]
+  useHttpPath = true
+
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+
+[safe]
+  directory = /usr/local/Homebrew
+
+[credential "https://github.com"]
+	helper =
+	helper = !~/.homebrew/bin/gh auth git-credential
+
+[credential "https://gist.github.com"]
+	helper =
+	helper = !~/.homebrew/bin/gh auth git-credential
