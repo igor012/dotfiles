@@ -1,0 +1,32 @@
+[init]
+	defaultBranch = main
+[user]
+	email = carre.fabien@gmail.com
+	name = Fabien Carré
+[color]
+  ui = auto
+[alias]
+  st = status -sb
+  ci = commit
+  br = branch
+  co = checkout
+  df = diff
+  caa = commit -a --amend -C HEAD
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  gup='git pull --rebase'
+  gst='git status'
+  gad='git add'
+  gco='git commit -m'
+  gdf='git diff'
+[help]
+  autocorrect = 5
+[core]
+  editor = vim
+[push]
+  default = tracking
+[pull]
+  rebase = true
+[url "git@github.com:"]
+  insteadOf = "gh:"
+  pushInsteadOf = "github:"
+  pushInsteadOf = "git://github.com/"
