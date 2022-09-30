@@ -1,0 +1,39 @@
+# This is a template for Chezmoi's configuration file
+# It will be filled with values specific to each machine
+# See https://www.chezmoi.io/reference/configuration-file/ for details
+
+[data]
+    name = "{{ promptString "name" }}"
+    email = "{{ promptString "email" }}"
+
+    # Determine environment based on hostname or manual selection
+    {{- $hostname := output "hostname" | trim -}}
+    {{- if contains "work" $hostname }}
+    environment = "work"
+    {{- else if contains "personal" $hostname }}
+    environment = "personal"
+    {{- else }}
+    environment = "{{ promptString "environment (personal/work)" }}"
+    {{- end }}
+
+    # OS-specific configurations
+    {{- if eq .chezmoi.os "darwin" }}
+    install_homebrew_packages = true
+    {{- else }}
+    install_homebrew_packages = false
+    {{- end }}
+
+[edit]
+    command = "code"
+
+[merge]
+    command = "code"
+    args = ["--wait", "--merge", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
+
+[diff]
+    command = "code"
+    args = ["--wait", "--diff", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
+
+[git]
+    autoCommit = true
+    autoPush = false

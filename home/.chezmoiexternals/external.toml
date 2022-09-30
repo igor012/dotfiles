@@ -1,0 +1,12 @@
+[".fzf"]
+type = "git-repo"
+url = "https://github.com/junegunn/fzf.git"
+refreshPeriod = "168h"
+stripComponents = 1
+
+[".config/alacritty/themes"]
+type = "git-repo"
+url = "https://github.com/rose-pine/alacritty.git"
+refreshPeriod = "168h"
+stripComponents = 1
+include = ["*/dist/**" ]

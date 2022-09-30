@@ -1,0 +1,35 @@
+##
+
+bootstrap.sh
+install.sh
+
+{{ if ne .chezmoi.os "darwin" }}
+.chezmoiscripts/darwin/**
+.tfswitch.toml
+{{ end }}
+
+{{ if ne .chezmoi.os "linux" }}
+.chezmoiscripts/linux/**
+
+{{ end }}
+
+{{ if ne .chezmoi.os "windows" }}
+.chezmoiscripts/windows/**
+Documents
+{{ else }}
+.bash_aliases
+.config/forge
+.config/git/cookies
+.config/psql
+.config/readline
+.gnupg
+.gnupg/**
+.inputrc
+.oh-my-zsh
+.oh-my-zsh/**
+.p10k.zsh
+.ssh/id_rsa
+.ssh/id_rsa.pub
+.zprofile
+.zshrc
+{{ end }}

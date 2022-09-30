@@ -1,0 +1,5 @@
+packages:
+  darwin:
+    brews:
+    - name: "pyenv"
+      config: "pyenv-c"
