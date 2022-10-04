@@ -36,6 +36,9 @@ Set-Alias -Name j -Value "z"
 ### Source kubectl autocomplete
 . "$Env:PWSHCONF\kubectl_autocomplete.ps1"
 
+### Source chezmoi autocomplete
+. "$Env:PWSHCONF\chezmoi_autocomplete.ps1"
+
 ### Chocolatey
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 if (Test-Path($ChocolateyProfile)) {
