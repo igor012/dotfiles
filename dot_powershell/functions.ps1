@@ -28,6 +28,10 @@ function la {
     ls.exe -la --color=auto
 }
 
+function lad {
+    ls.exe -lad --color=auto .??*
+}
+
 function reload_giacei {
 	Remove-Module giacei -ErrorAction SilentlyContinue
 	Import-module ".\giacei.psd1"

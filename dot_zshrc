@@ -57,3 +57,14 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(direnv hook zsh)"
+
+
+plop() {
+        plop=$(mktemp --directory --suffix '-plop' -p /var/tmp)
+        cd $plop
+}
+
+winhome() {
+        h="/mnt/c/Users/GQ6381/"
+        pushd $h
+}
