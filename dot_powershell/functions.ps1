@@ -31,4 +31,5 @@ function la {
 function reload_giacei {
 	Remove-Module giacei -ErrorAction SilentlyContinue
 	Import-module ".\giacei.psd1"
+	Write-Host "Module reloaded!"
 }
