@@ -1,3 +1,7 @@
+
+## MacOS and Linux
+
+{{ if eq .chezmoi.os "linux" "darwin" }}
 [".oh-my-zsh"]
     type = "archive"
     url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
@@ -15,10 +19,6 @@
     url = "https://github.com/romkatv/powerlevel10k/archive/v1.15.0.tar.gz"
     exact = true
     stripComponents = 1
-[".vim/autoload"]
-    type = "git-repo"
-    url = "https://github.com/junegunn/vim-plug.git"
-    refreshPeriod = "168h"
 [".pyenv"]
     type = "git-repo"
     url = "https://github.com/pyenv/pyenv.git"
@@ -28,4 +28,18 @@
     url = "https://github.com/junegunn/fzf.git"
     refreshPeriod = "168h"
     stripComponents = 1
-   
+{{- end }}
+
+### Windows Only
+{{ if eq .chezmoi.os "windows" }}
+[".pyenv"]
+    type = "git-repo"
+    url = "https://github.com/pyenv-win/pyenv-win.git"
+    refreshPeriod = "168h"
+{{ end }}
+
+### Any OS
+[".vim/autoload"]
+    type = "git-repo"
+    url = "https://github.com/junegunn/vim-plug.git"
+    refreshPeriod = "168h"
