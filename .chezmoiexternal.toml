@@ -1,7 +1,7 @@
 
 ## MacOS and Linux
 
-{{ if eq .chezmoi.os "linux" "darwin" }}
+{{- if eq .chezmoi.os "linux" }}
 [".oh-my-zsh"]
     type = "archive"
     url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
@@ -31,7 +31,7 @@
 {{- end }}
 
 ### Windows Only
-{{ if eq .chezmoi.os "windows" }}
+{{- if eq .chezmoi.os "windows" }}
 [".pyenv"]
     type = "git-repo"
     url = "https://github.com/pyenv-win/pyenv-win.git"
