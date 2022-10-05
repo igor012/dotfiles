@@ -34,7 +34,10 @@
 [http]
         sslCAInfo = C:\\Users\\GQ6381\\.powershell\\ca-bundle.crt
 {{- end }}
+
+{{- if eq .chezmoi.os "linux" }}
 {{- if .chezmoi.kernel.osrelease | regexMatch "-WSL2$" }}
 [http]
         sslCAInfo = /mnt/c/Users/GQ6381/.powershell/ca-bundle.crt
+{{- end }}
 {{- end }}
