@@ -16,20 +16,20 @@ function genk8sconf {
 }
 
 function ls {
-    ls.exe -l --color=auto $args
+    ls.exe -lF --color=auto $args
   }
 function l {
-    ls.exe -l --color=auto $args
+    ls.exe -lF --color=auto $args
 }
 function ll {
-    ls.exe -l --color=auto $args
+    ls.exe -lF --color=auto $args
 }
 function la {
-    ls.exe -la --color=auto
+    ls.exe -laF --color=auto
 }
 
 function lad {
-    ls.exe -lad --color=auto .??*
+    ls.exe -ladF --color=auto .??*
 }
 
 function reload_giacei {
