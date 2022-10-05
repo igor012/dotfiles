@@ -73,9 +73,11 @@ plop() {
         cd $plop
 }
 
+{{- if eq .chezmoi.os "linux" }}
 {{ if .chezmoi.kernel.osrelease | regexMatch "-WSL2$" }}
 winhome() {
         h="/mnt/c/Users/GQ6381/"
         pushd $h
 }
+{{- end }}
 {{- end }}
