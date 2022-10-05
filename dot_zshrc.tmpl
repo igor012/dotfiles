@@ -61,7 +61,7 @@ source /usr/local/Cellar/azure-cli/${az_version}/etc/bash_completion.d/az
 az_version=$(brew list --versions|awk '/azure-cli/ { print $2 }')
 {{- end }}
 
-export PATH="/usr/local/sbin:$PATH"
+export PATH="$PATH:/usr/local/sbin:/home/linuxbrew/.linuxbrew/bin"
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
