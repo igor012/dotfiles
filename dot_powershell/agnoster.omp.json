@@ -20,10 +20,11 @@
             "folder_icon": "\uf115",
             "folder_separator_icon": " \ue0b1 ",
             "home_icon": "\uf7db",
-            "style": "agnoster"
+            "style": "agnoster_short"
           },
           "style": "powerline",
 	  "mixed_threshold": "2",
+	  "max_depth": "2",
           "template": " {{ .Path }} ",
           "type": "path"
         },
@@ -34,14 +35,6 @@
           "style": "powerline",
           "template": " {{ .HEAD }} ",
           "type": "git"
-        },
-        {
-          "background": "#906cff",
-          "foreground": "#100e23",
-          "powerline_symbol": "\ue0b0",
-          "style": "powerline",
-          "template": " \ue235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }} ",
-          "type": "python"
         },
         {
           "background": "#ff8080",

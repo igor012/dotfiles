@@ -37,3 +37,12 @@ function reload_giacei {
 	Import-module ".\giacei.psd1"
 	Write-Host "Module reloaded!"
 }
+
+function auth {
+	$username = "gq6381-o"
+	$secret = gopass show -c $username
+	$password = ConvertTo-SecureString -String $secret -AsPlainText -Force
+	$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $password
+	$global:cred = Get-Credential -Credential $Credential
+	return $cred
+}
