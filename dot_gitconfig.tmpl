@@ -39,5 +39,7 @@
 {{- if .chezmoi.kernel.osrelease | regexMatch "-WSL2$" }}
 [http]
         sslCAInfo = /mnt/c/Users/GQ6381/.powershell/ca-bundle.crt
+[credential]
+	helper = gopass
 {{- end }}
 {{- end }}
