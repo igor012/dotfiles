@@ -4,7 +4,7 @@ $Env:PATH += ';C:\Users\GQ6381\AppData\Roaming\vim\vim82;C:\Users\GQ6381\bin\;C:
 $Env:VAGRANT_DEFAULT_PROVIDER="virtualbox"
 $Env:DIRENV_CONFIG='C:\Users\GQ6381\bin\'
 $Env:STARSHIP_CONFIG = "$HOME\.config\starship.toml"
-$Env:REQUESTS_CA_BUNDLE='$Env:PWSHCONF\ca-bundle.crt'
+$Env:REQUESTS_CA_BUNDLE="$Env:PWSHCONF\ca-bundle.crt"
 
 
 
