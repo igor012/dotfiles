@@ -82,6 +82,6 @@ winhome() {
 }
 export DISPLAY=$(ip route list default | awk '{print $3}'):0
 export LIBGL_ALWAYS_INDIRECT=1
-KUBECONFIG=/mnt/c/Users/GQ6381/.kube/config
+export KUBECONFIG=/mnt/c/Users/GQ6381/.kube/config
 {{- end }}
 {{- end }}
