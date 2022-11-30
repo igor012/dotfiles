@@ -52,6 +52,6 @@ if ($host.Name -eq 'ConsoleHost')
 {
     Import-Module PSReadLine
 }
-(@(& 'C:/Users/GQ6381/AppData/Local/Programs/oh-my-posh/bin/oh-my-posh.exe' init pwsh --config='C:\Users\GQ6381\.powershell\agnoster.omp.json' --print) -join "`n") | Invoke-Expression
+# (@(& 'C:/Users/GQ6381/AppData/Local/Programs/oh-my-posh/bin/oh-my-posh.exe' init pwsh --config='C:\Users\GQ6381\.powershell\agnoster.omp.json' --print) -join "`n") | Invoke-Expression
 
-#Invoke-Expression (&starship init powershell)
+Invoke-Expression (&starship init powershell)
