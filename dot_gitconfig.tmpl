@@ -30,10 +30,6 @@
   insteadOf = "gh:"
   pushInsteadOf = "github:"
   pushInsteadOf = "git://github.com/"
-{{- if eq .chezmoi.hostname "IT200-PF354TV0" }}
-[http]
-        sslCAInfo = C:\\Users\\GQ6381\\.powershell\\ca-bundle.crt
-{{- end }}
 
 {{- if eq .chezmoi.os "linux" }}
 {{- if .chezmoi.kernel.osrelease | regexMatch "-WSL2$" }}
