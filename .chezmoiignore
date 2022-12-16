@@ -7,3 +7,7 @@
 .tmux.conf
 .zshenv
 {{- end }}
+
+{{ if eq .chezmoi.os "linux" }}
+AppData/**
+{{- end }}
