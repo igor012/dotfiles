@@ -56,8 +56,8 @@ bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
 
 
-[[ -f ~/.oh-my-zsh/custom/plugins/zsh-autocomplete ]] || source ~/.oh-my-zsh/custom/plugins/zsh-autocomplete
 {{- if eq .chezmoi.os "darwin" }}
+export az_version=$(brew info azure-cli --json | jq -r '.[].installed[].version')
 source /usr/local/Cellar/azure-cli/${az_version}/etc/bash_completion.d/az
 az_version=$(brew list --versions|awk '/azure-cli/ { print $2 }')
 {{- end }}
@@ -87,4 +87,15 @@ export DISPLAY=$(ip route list default | awk '{print $3}'):0
 export LIBGL_ALWAYS_INDIRECT=1
 export KUBECONFIG=/mnt/c/Users/GQ6381/.kube/config
 {{- end }}
+{{- end }}
+
+
+export PATH=${PATH}:${HOME}/.bin/:${HOME}/.azure/bin
+export GOPATH=${HOME}/.go
+export LS_COLORS="$(vivid generate snazzy)"
+
+alias j='z'
+
+{{- if eq .chezmoi.os "darwin" }}
+alias ls='gls --color=auto' 
 {{- end }}

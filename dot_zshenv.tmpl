@@ -1,11 +1,2 @@
 ##
 
-export PATH=${PATH}:${HOME}/.bin/:${HOME}/.azure/bin
-export GOPATH=${HOME}/.go
-export LS_COLORS="$(vivid generate snazzy)"
-
-alias j='z'
-
-{{- if eq .chezmoi.os "darwin" }}
-alias ls='gls --color=auto' 
-{{- end }}
