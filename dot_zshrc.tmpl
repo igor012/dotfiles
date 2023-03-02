@@ -86,6 +86,18 @@ export REQUESTS_CA_BUNDLE="/mnt/c/Users/GQ6381/.powershell/ca-bundle.crt"
 export DISPLAY=$(ip route list default | awk '{print $3}'):0
 export LIBGL_ALWAYS_INDIRECT=1
 export KUBECONFIG=/mnt/c/Users/GQ6381/.kube/config
+export SSL_CERT_FILE=$REQUESTS_CA_BUNDLE
+function az_login_work {
+    export AZURE_CONFIG_DIR=~/.Azure
+    az login --use-device-code
+}
+ 
+function az_login_personal {
+    export AZURE_CONFIG_DIR=~/.Azure-personal
+    az login --use-device-code
+}
+
+
 {{- end }}
 {{- end }}
 
