@@ -1,7 +1,7 @@
 
 ## MacOS and Linux
 
-{{- if eq .chezmoi.os "linux" }}
+{{- if ne .chezmoi.os "windows" }}
 [".oh-my-zsh"]
     type = "git-repo"
     url = "https://github.com/ohmyzsh/ohmyzsh.git"
@@ -19,10 +19,10 @@
     url = "https://github.com/romkatv/powerlevel10k.git"
     exact = true
     stripComponents = 1
-[".pyenv"]
-    type = "git-repo"
-    url = "https://github.com/pyenv/pyenv.git"
-    refreshPeriod = "168h"
+#[".pyenv"]
+#    type = "git-repo"
+#    url = "https://github.com/pyenv/pyenv.git"
+#    refreshPeriod = "168h"
 [".fzf"]
     type = "git-repo"
     url = "https://github.com/junegunn/fzf.git"

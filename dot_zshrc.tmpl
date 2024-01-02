@@ -58,7 +58,7 @@ bindkey "^[[1;3D" backward-word
 
 {{- if eq .chezmoi.os "darwin" }}
 export az_version=$(brew info azure-cli --json | jq -r '.[].installed[].version')
-source /usr/local/Cellar/azure-cli/${az_version}/etc/bash_completion.d/az
+source /opt/homebrew/Cellar/azure-cli/${az_version}/etc/bash_completion.d/az
 az_version=$(brew list --versions|awk '/azure-cli/ { print $2 }')
 {{- end }}
 
@@ -84,7 +84,6 @@ winhome() {
 
 }
 export DONT_PROMPT_WSL_INSTALL=true
-export REQUESTS_CA_BUNDLE="/mnt/c/Users/GQ6381/.powershell/ca-bundle.crt"
 export DISPLAY=$(ip route list default | awk '{print $3}'):0
 export LIBGL_ALWAYS_INDIRECT=1
 export KUBECONFIG=/mnt/c/Users/GQ6381/.kube/config
