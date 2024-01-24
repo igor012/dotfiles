@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "*.tmpl": "shellscript",
+    "*.vim": "lua",
+    "*.toml": "ini"
+  }
+}

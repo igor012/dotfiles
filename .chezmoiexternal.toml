@@ -1,5 +1,5 @@
 
-## MacOS and Linux
+# MacOS and Linux
 
 {{- if ne .chezmoi.os "windows" }}
 [".oh-my-zsh"]
@@ -19,10 +19,7 @@
     url = "https://github.com/romkatv/powerlevel10k.git"
     exact = true
     stripComponents = 1
-#[".pyenv"]
-#    type = "git-repo"
-#    url = "https://github.com/pyenv/pyenv.git"
-#    refreshPeriod = "168h"
+
 [".fzf"]
     type = "git-repo"
     url = "https://github.com/junegunn/fzf.git"
@@ -43,7 +40,7 @@
     refreshPeriod = "168h"
 {{ end }}
 
-### Any OS
+# Common
 [".vim/autoload"]
     type = "git-repo"
     url = "https://github.com/junegunn/vim-plug.git"
