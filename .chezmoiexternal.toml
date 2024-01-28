@@ -19,7 +19,6 @@
     url = "https://github.com/romkatv/powerlevel10k.git"
     exact = true
     stripComponents = 1
-
 [".fzf"]
     type = "git-repo"
     url = "https://github.com/junegunn/fzf.git"
@@ -28,6 +27,11 @@
 [".tmux/plugins/tpm"]
     type = "git-repo"
     url = "https://github.com/tmux-plugins/tpm"
+    refreshPeriod = "168h"
+    stripComponents = 1
+[".local/gconf"]
+    type = "git-repo"
+    url = "https://github.com/uhinze/gconf.git"
     refreshPeriod = "168h"
     stripComponents = 1
 {{- end }}

@@ -5,7 +5,7 @@
 ################
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # Path to your oh-my-zsh installation.
@@ -50,6 +50,10 @@ export LS_COLORS="$(vivid generate snazzy)"
 alias j="z"
 alias vim="nvim"
 alias hg='history | grep '
+
+function gi() {
+    curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ ;
+}
 
 function az_login_work {
     export AZURE_CONFIG_DIR=~/.az
