@@ -1,0 +1,36 @@
+## Reset Dock
+defaults delete com.apple.dock && killall Dock
+
+# Pref
+
+defaults write com.apple.dock orientation left
+defaults write com.apple.dock "autohide" -bool "true"
+defaults write com.apple.dock autohide-time-modifier -float 1
+defaults write com.apple.dock tilesize -integer 35
+defaults write com.apple.dock largesize -int 45
+defaults write com.apple.dock magnification -int 1
+killall Dock
+
+defaults write com.apple.dock show-recents -bool false
+defaults write com.apple.dock persistent-apps -bool false
+killall Dock
+
+# Finder
+defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true"
+defaults write com.apple.finder "AppleShowAllFiles" -bool "true"
+defaults write com.apple.finder "ShowPathbar" -bool "true"
+defaults write com.apple.finder "_FXSortFoldersFirst" -bool "true"
+defaults write com.apple.finder "FXDefaultSearchScope" -string "SCcf"
+defaults write com.apple.finder "FXEnableExtensionChangeWarning" -bool "false"
+defaults write NSGlobalDomain "NSTableViewDefaultSizeMode" -int "1"
+
+killall Finder
+
+# Textedit
+defaults write com.apple.TextEdit "RichText" -bool "false"
+
+# Time Machine
+defaults write com.apple.TimeMachine "DoNotOfferNewDisksForBackup" -bool "true"
+
+defaults write com.apple.dock wvous-tl-corner -int 2
+killall Dock

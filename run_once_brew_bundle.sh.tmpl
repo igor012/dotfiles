@@ -1,98 +1,110 @@
 {{- if eq .chezmoi.os "darwin" -}}
 #!/bin/bash
 
-brew bundle --no-lock --file=/dev/stdin <<EOF
-brew 'ag'
-brew 'autoconf'
-brew 'azure-cli'
-brew 'azure-functions-core-tools@4'
-brew 'Azure/kubelogin/kubelogin'
-brew 'bash'
-brew 'binutils'
-brew 'ccat'
-brew 'chezmoi'
-brew 'cless'
-brew 'coreutils'
-brew 'diffutils'
-brew 'direnv'
-brew 'docker'
-brew 'dos2unix'
-brew 'drawio'
-brew 'ed'
-brew 'findutils'
-brew 'flex'
-brew 'fzf'
-brew 'gawk'
-brew 'gcloud'
-brew 'git-lfs'
-brew 'gls'
-brew 'gnu-indent'
-brew 'gnu-sed'
-brew 'gnu-tar'
-brew 'gnu-which'
-brew 'gnupg'
-brew 'gnuph'
-brew 'google-cloud'
-brew 'gpatch'
-brew 'grep'
-brew 'gzip'
-brew 'helm'
-brew 'hg'
-brew 'htop'
-brew 'htrop'
-brew 'jgrep'
-brew 'jq'
-brew 'k9s'
-brew 'kustomize'
-brew 'less'
-brew 'locust'
-brew 'lsd'
-brew 'm4'
-brew 'maccy'
-brew 'make'
-cask 'microsoft-remote-desktop'
-brew 'mitmproxy'
-brew 'mkvtomp4'
-brew 'nano'
-brew 'neovim'
-brew 'nnn'
-brew 'node'
-brew 'podman'
-brew 'postman'
-brew 'postmanj'
-brew 'powershell'
-brew 'pwsh'
-brew 'pyenv-virtualenv'
-brew 'pyenv'
-brew 'rcmdnk/file/brew-file'
-brew 'screen'
-brew 'socat'
-brew 'sublime-text'
-brew 'terraform-docs'
-brew 'tfdocs'
-brew 'tflint'
-brew 'tfswitch'
-brew 'tig'
-brew 'tmux'
-brew 'vim'
-brew 'vivid'
-brew 'warrensbox/tap/tfswitch'
-brew 'watch'
-brew 'wdiff'
-brew 'wget'
-brew 'zcat'
-brew 'zip'
-cask 'azure-data-studio'
-cask 'docker-desktop'
-cask 'firefox'
-cask 'google-chrome'
-cask 'keepingyouawake'
-cask 'logitech-options'
-cask 'microsoft-azure-storage-explorer'
-cask 'multipass'
-cask 'podman-desktop'
-cask 'rectangle'
-cask 'visual-studio-code'
-cask 'vscode'
-EOF
-{{ end -}}
+set -eufo pipefail
+
+formulae=(
+    ag
+    autoconf
+    azure-cli
+    azure-functions-core-tools@4
+    Azure/kubelogin/kubelogin
+    bash
+    binutils
+    ccat
+    chezmoi
+    cless
+    coreutils
+    diffutils
+    direnv
+    docker
+    dos2unix
+    drawio
+    ed
+    findutils
+    flex
+    fzf
+    gawk
+    gcloud
+    git-lfs
+    gls
+    gnu-indent
+    gnu-sed
+    gnu-tar
+    gnu-which
+    gnupg
+    gnuph
+    google-cloud
+    gpatch
+    grep
+    gzip
+    helm
+    hg
+    htop
+    htrop
+    jgrep
+    jq
+    k9s
+    kustomize
+    less
+    locust
+    lsd
+    m4
+    maccy
+    make
+    mitmproxy
+    mkvtomp4
+    nano
+    neovim
+    nnn
+    node
+    podman
+    postman
+    postmanj
+    powershell
+    pwsh
+    pyenv
+    pyenv-virtualenv
+    rcmdnk/file/brew-file
+    screen
+    socat
+    sublime-text
+    terraform-docs
+    tfdocs
+    tflint
+    tfswitch
+    tig
+    tmux
+    vim
+    vivid
+    warrensbox/tap/tfswitch
+    watch
+    wdiff
+    wget
+    zcat
+    zip
+)
+casks=(
+    azure-data-studio
+    docker-desktop
+    firefox
+    google-chrome
+    keepingyouawake
+    logitech-options
+    microsoft-azure-storage-explorer
+    microsoft-remote-desktop
+    multipass
+    podman-desktop
+    rectangle
+    visual-studio-code
+    vscode
+)
+
+brew update
+
+brew install ${formulae[@]}
+brew install --cask ${casks[@]}
+
+brew cleanup
+
+{{- end -}}
