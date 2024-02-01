@@ -65,6 +65,19 @@ function az_login_personal {
     az login --use-device-code
 }
 
+function getproc {
+    local proc=$1
+    ps aux |grep -i ${proc}
+}
+
+function help {
+    local func_name=$1
+    if [ "$func_name" == "lol" ]; then
+       function lol { echo "lol" }
+    fi
+}
+
+
 # Darwin
 {{- if eq .chezmoi.os "darwin" }}
 alias ls="gls --color=auto"
