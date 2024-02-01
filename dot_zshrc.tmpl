@@ -29,15 +29,17 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 # Common
 
-[[  -f ~/.p10k.zsh ]] && source ${HOME}/.p10k.zsh
-[[ -f ~/.fzf.zsh ]] && source ${HOME}/.fzf.zsh
-
-source ${HOME}/.zsh/extract.plugin.zsh
+[[ -f ${HOME}/.p10k.zsh ]] && source ${HOME}/.p10k.zsh
+[[ -f ${HOME}/.fzf.zsh ]] && source ${HOME}/.fzf.zsh
+[[ -f $(brew --prefix)/etc/brew-wrap ]] && source $(brew --prefix)/etc/brew-wrap
+[[ -f ${HOME}/.zsh/extract.plugin.zsh ]] && source ${HOME}/.zsh/extract.plugin.zsh
 
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
+
 eval "$(pyenv init -)"
 eval "$(direnv hook zsh)"
+
 command -v pyenv >/dev/null || export PATH="${PYENV_ROOT}/bin:${PATH}"
 
 export AZURE_DEV_COLLECT_TELEMETRY="no"
