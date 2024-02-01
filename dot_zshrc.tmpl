@@ -81,9 +81,9 @@ function help {
 # Darwin
 {{- if eq .chezmoi.os "darwin" }}
 alias ls="gls --color=auto"
-export az_version=$(brew info azure-cli --json | jq -r '.[].installed[].version')
+az_version=$(gfind "/opt/homebrew/Cellar/azure-cli" -mindepth 1 -maxdepth 1 -type d)
+az_version=${az_version//\/opt\/homebrew\/Cellar\/azure-cli\//}
 source /opt/homebrew/Cellar/azure-cli/${az_version}/etc/bash_completion.d/az
-az_version=$(brew list --versions|awk '/azure-cli/ { print $2 }')
 
 plop() {
         plop=$(mktemp --directory -t '-plop' -p /var/tmp)
