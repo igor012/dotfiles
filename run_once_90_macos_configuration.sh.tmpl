@@ -1,3 +1,6 @@
+{{ if (eq .chezmoi.os "darwin") -}}
+#!/bin/bash
+
 ## Reset Dock
 defaults delete com.apple.dock && killall Dock
 
@@ -34,3 +37,6 @@ defaults write com.apple.TimeMachine "DoNotOfferNewDisksForBackup" -bool "true"
 
 defaults write com.apple.dock wvous-tl-corner -int 2
 killall Dock
+{{ end -}}
+
+echo "Done. Note that some of these changes require a logout/restart to take effect."
