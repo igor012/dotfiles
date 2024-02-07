@@ -3,6 +3,10 @@
 
 set -eufo pipefail
 
+taps=(
+    azure/functions
+)
+
 formulae=(
     ag
     autoconf
@@ -86,6 +90,7 @@ casks=(
 
 brew update
 
+brew tap ${taps[@]}
 brew install ${formulae[@]}
 brew install --cask ${casks[@]}
 

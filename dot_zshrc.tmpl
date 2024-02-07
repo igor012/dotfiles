@@ -17,12 +17,28 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 plugins=(git fzf ansible direnv podman docker-compose terraform tmux kubectl gcloud vagrant zsh-syntax-highlighting z kubectx)
 
-{{- if eq .chezmoi.os "linux" }}
+# Darwin Configuration
+{{- if eq .chezmoi.os "darwin" }}
 plugins+=(vagrant)
+alias ls="gls --color=auto"
+
+azcli_path=$(gfind "${HOMEBREW_PREFIX}/Cellar/azure-cli" -mindepth 1 -maxdepth 1 -type d)
+az_version=${azcli_path/${HOMEBREW_PREFIX}\/Cellar\/azure-cli\//}
+source ${HOMEBREW_PREFIX}/Cellar/azure-cli/${az_version}/etc/bash_completion.d/az
+
+plop() {
+        plop=$(mktemp --directory -t '-plop' -p /var/tmp)
+        cd $plop
+}
 {{- end }}
 
-{{- if eq .chezmoi.os "darwin" }}
+# Linux Configuration
+{{- if eq .chezmoi.os "linux" }}
 plugins+=(brew)
+plop() {
+        plop=$(mktemp --directory --suffix '-plop' -p /var/tmp)
+        cd $plop
+}
 {{- end }}
 
 echo $plugins
@@ -30,10 +46,9 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 # Common
-
 [[ -f ${HOME}/.p10k.zsh ]] && source ${HOME}/.p10k.zsh
 [[ -f ${HOME}/.fzf.zsh ]] && source ${HOME}/.fzf.zsh
-[[ -f $(brew --prefix)/etc/brew-wrap ]] && source $(brew --prefix)/etc/brew-wrap
+[[ -f {HOMEBREW_PREFIX}/etc/brew-wrap ]] && source ${HOMEBREW_PREFIX}/etc/brew-wrap
 [[ -f ${HOME}/.zsh/extract.plugin.zsh ]] && source ${HOME}/.zsh/extract.plugin.zsh
 
 bindkey "^[[1;3C" forward-word
@@ -55,8 +70,9 @@ alias j="z"
 alias vim="nvim"
 alias hg='history | grep '
 
-### GCP ###
+######## FUNCTIONS ########
 
+### GCP ###
 function gproject {
     select gcp_project in $(
         gcloud projects list --format json | jq -r '.[] | .projectId' ); do
@@ -76,11 +92,12 @@ function glogin {
     done
 }
 
-
-
+# Gitignore
 function gi() {
     curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ ;
 }
+
+######## AZURE ########
 
 function az_login_work {
     export AZURE_CONFIG_DIR=~/.az
@@ -92,10 +109,15 @@ function az_login_personal {
     az login --use-device-code
 }
 
+######## SYSTEM ########
+
 function getproc {
     local proc=$1
     ps aux |grep -i ${proc}
 }
+
+
+######## TEST ########
 
 function help {
     local func_name=$1
@@ -105,26 +127,3 @@ function help {
 
 }
 
-
-# Darwin
-{{- if eq .chezmoi.os "darwin" }}
-alias ls="gls --color=auto"
-
-azcli_path=$(gfind "${HOMEBREW_PREFIX}/Cellar/azure-cli" -mindepth 1 -maxdepth 1 -type d)
-az_version=${azcli_path/${HOMEBREW_PREFIX}\/Cellar\/azure-cli\//}
-source ${HOMEBREW_PREFIX}/Cellar/azure-cli/${az_version}/etc/bash_completion.d/az
-
-plop() {
-        plop=$(mktemp --directory -t '-plop' -p /var/tmp)
-        cd $plop
-}
-
-{{- end }}
-
-# Linux
-{{- if eq .chezmoi.os "linux" }}
-plop() {
-        plop=$(mktemp --directory --suffix '-plop' -p /var/tmp)
-        cd $plop
-}
-{{- end }}
