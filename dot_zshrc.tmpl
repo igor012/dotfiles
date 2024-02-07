@@ -107,9 +107,10 @@ function help {
 # Darwin
 {{- if eq .chezmoi.os "darwin" }}
 alias ls="gls --color=auto"
-az_version=$(gfind "/opt/homebrew/Cellar/azure-cli" -mindepth 1 -maxdepth 1 -type d)
-az_version=${az_version//\/opt\/homebrew\/Cellar\/azure-cli\//}
-source /opt/homebrew/Cellar/azure-cli/${az_version}/etc/bash_completion.d/az
+
+azcli_path=$(gfind "${HOMEBREW_PREFIX}/Cellar/azure-cli" -mindepth 1 -maxdepth 1 -type d)
+az_version=${azcli_path/${HOMEBREW_PREFIX}\/Cellar\/azure-cli\//}
+source ${HOMEBREW_PREFIX}/Cellar/azure-cli/${az_version}/etc/bash_completion.d/az
 
 plop() {
         plop=$(mktemp --directory -t '-plop' -p /var/tmp)
