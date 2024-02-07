@@ -53,6 +53,29 @@ alias j="z"
 alias vim="nvim"
 alias hg='history | grep '
 
+### GCP ###
+
+function gproject {
+    select gcp_project in $(
+        gcloud projects list --format json | jq -r '.[] | .projectId' ); do
+            gcloud config set project $gcp_project
+            echo "Active GCP Project : $gcp_project"
+    break
+    done
+}
+
+function glogin {
+    CRED_PATH="${HOME}/.config/gcloud/creds/sa/"
+    select creds in $(gfind ${CRED_PATH} -type f ); do
+        export GOOGLE_APPLICATION_CREDENTIALS=$CRED_PATH/$creds
+        export GOOGLE_CREDENTIALS=$CRED_PATH/$creds
+        echo "Active GCP Creds : $creds"
+    break
+    done
+}
+
+
+
 function gi() {
     curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ ;
 }
@@ -74,9 +97,10 @@ function getproc {
 
 function help {
     local func_name=$1
-    if [ "$func_name" == "lol" ]; then
-       function lol { echo "lol" }
-    fi
+    case $func_name in
+        "lol") echo "lol" ;;
+    esac
+
 }
 
 
