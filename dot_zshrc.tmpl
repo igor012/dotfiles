@@ -12,19 +12,13 @@ fi
 export ZSH="${HOME}/.oh-my-zsh"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
-
 # HIST_STAMPS="yyyy/mm/dd"
-
 plugins=(git fzf ansible direnv podman docker-compose terraform tmux kubectl gcloud vagrant zsh-syntax-highlighting z kubectx)
 
 # Darwin Configuration
 {{- if eq .chezmoi.os "darwin" }}
 plugins+=(vagrant)
 alias ls="gls --color=auto"
-
-azcli_path=$(gfind "${HOMEBREW_PREFIX}/Cellar/azure-cli" -mindepth 1 -maxdepth 1 -type d)
-az_version=${azcli_path/${HOMEBREW_PREFIX}\/Cellar\/azure-cli\//}
-source ${HOMEBREW_PREFIX}/Cellar/azure-cli/${az_version}/etc/bash_completion.d/az
 
 plop() {
         plop=$(mktemp --directory -t '-plop' -p /var/tmp)
@@ -41,15 +35,18 @@ plop() {
 }
 {{- end }}
 
-echo $plugins
 source $ZSH/oh-my-zsh.sh
-
 # User configuration
 # Common
 [[ -f ${HOME}/.p10k.zsh ]] && source ${HOME}/.p10k.zsh
 [[ -f ${HOME}/.fzf.zsh ]] && source ${HOME}/.fzf.zsh
 [[ -f {HOMEBREW_PREFIX}/etc/brew-wrap ]] && source ${HOMEBREW_PREFIX}/etc/brew-wrap
 [[ -f ${HOME}/.zsh/extract.plugin.zsh ]] && source ${HOME}/.zsh/extract.plugin.zsh
+
+
+azcli_path=$(gfind "${HOMEBREW_PREFIX}/Cellar/azure-cli" -mindepth 1 -maxdepth 1 -type d)
+az_version=${azcli_path/${HOMEBREW_PREFIX}\/Cellar\/azure-cli\//}
+source ${HOMEBREW_PREFIX}/Cellar/azure-cli/${az_version}/etc/bash_completion.d/az
 
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
