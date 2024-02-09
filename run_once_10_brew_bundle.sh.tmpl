@@ -96,4 +96,7 @@ brew install --cask ${casks[@]}
 
 brew cleanup
 
+echo "Outputting brew list with versions"
+brew list --versions | awk '{ print $1 "=" $2 }' >${HOME}/.brew_list
+
 {{- end -}}
