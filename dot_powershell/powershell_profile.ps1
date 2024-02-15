@@ -1,8 +1,8 @@
 ### Env
-$Env:PWSHCONF = 'C:\Users\GQ6381\.powershell\'
-$Env:PATH += ';C:\Users\GQ6381\AppData\Roaming\vim\vim82;C:\Users\GQ6381\bin\;C:\Users\GQ6381\.krew\bin;C:\Program Files\Git\usr\bin;C:\Users\GQ6381\AppData\Roaming\Python\Python39\Scripts\'
+$Env:PWSHCONF = 'C:\Users\__USERNAME__\.powershell\'
+$Env:PATH += ';C:\Users\__USERNAME__\AppData\Roaming\vim\vim82;C:\Users\__USERNAME__\bin\;C:\Users\__USERNAME__\.krew\bin;C:\Program Files\Git\usr\bin;C:\Users\__USERNAME__\AppData\Roaming\Python\Python39\Scripts\'
 $Env:VAGRANT_DEFAULT_PROVIDER="virtualbox"
-$Env:DIRENV_CONFIG='C:\Users\GQ6381\bin\'
+$Env:DIRENV_CONFIG='C:\Users\__USERNAME__\bin\'
 $Env:STARSHIP_CONFIG = "$HOME\.config\starship.toml"
 $Env:REQUESTS_CA_BUNDLE="$Env:PWSHCONF\ca-bundle.crt"
 
@@ -52,6 +52,6 @@ if ($host.Name -eq 'ConsoleHost')
 {
     Import-Module PSReadLine
 }
-# (@(& 'C:/Users/GQ6381/AppData/Local/Programs/oh-my-posh/bin/oh-my-posh.exe' init pwsh --config='C:\Users\GQ6381\.powershell\agnoster.omp.json' --print) -join "`n") | Invoke-Expression
+# (@(& 'C:/Users/__USERNAME__/AppData/Local/Programs/oh-my-posh/bin/oh-my-posh.exe' init pwsh --config='C:\Users\__USERNAME__\.powershell\agnoster.omp.json' --print) -join "`n") | Invoke-Expression
 
 Invoke-Expression (&starship init powershell)

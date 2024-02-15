@@ -39,7 +39,7 @@ function reload_giacei {
 }
 
 function auth {
-	$username = "gq6381-o"
+	$username = "$USERNAME"
 	$secret = gopass show -c $username
 	$password = ConvertTo-SecureString -String $secret -AsPlainText -Force
 	$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $username, $password
