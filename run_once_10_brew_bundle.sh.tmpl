@@ -7,6 +7,7 @@ brew bundle --no-lock --file=/dev/stdin <<EOF
 tap "azure/functions"
 tap "azure/kubelogin"
 tap "homebrew/bundle"
+tap "instrumenta/instrumenta"
 tap "koekeishiya/formulae"
 tap "rcmdnk/file"
 tap "tidbyt/tidbyt"
@@ -33,6 +34,7 @@ brew "coreutils"
 brew "curl"
 brew "diffutils"
 brew "direnv"
+brew "dive"
 brew "dockutil"
 brew "dos2unix"
 brew "ed"
@@ -68,6 +70,7 @@ brew "jq"
 brew "k3d"
 brew "k9s"
 brew "krew"
+brew "kubeconform"
 brew "kustomize"
 brew "less"
 brew "liblinear"
@@ -135,7 +138,6 @@ cask "firefox", args: { appdir: "/Applications" }
 cask "google-chrome", args: { appdir: "/Applications" }
 cask "google-cloud-sdk"
 cask "google-drive"
-cask "iterm2", args: { appdir: "/Applications" }
 cask "keepingyouawake"
 cask "kindle", args: { appdir: "/Applications" }
 cask "maccy", args: { appdir: "/Applications" }
@@ -159,10 +161,8 @@ cask "rectangle"
 cask "skype", args: { appdir: "/Applications" }
 cask "steam", args: { appdir: "/Applications" }
 cask "sublime-text"
-cask "thunderbird", args: { appdir: "/Applications" }
 cask "transmit", args: { appdir: "/Applications" }
-cask "vagrant", args: { appdir: "/Applications" }
-cask "virtualbox", args: { appdir: "/Applications" }
+
 cask "visual-studio-code", args: { appdir: "/Applications" }
 cask "vlc", args: { appdir: "/Applications" }
 cask "wireshark", args: { appdir: "/Applications" }
