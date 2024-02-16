@@ -2,7 +2,7 @@
 #!/bin/bash
 
 ## Reset Dock
-defaults delete com.apple.dock && killall Dock
+defaults write com.apple.dock persistent-apps -array && killall Dock
 
 # Pref
 
@@ -36,6 +36,13 @@ defaults write com.apple.TextEdit "RichText" -bool "false"
 defaults write com.apple.TimeMachine "DoNotOfferNewDisksForBackup" -bool "true"
 
 defaults write com.apple.dock wvous-tl-corner -int 2
+
+#Iterm2
+# Specify the preferences directory
+# defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/dotfiles/iterm2"
+# # Tell iTerm2 to use the custom preferences in the directory
+# defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+
 killall Dock
 {{ end -}}
 
