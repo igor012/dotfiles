@@ -4,6 +4,7 @@
     "*.toml": "ini",
     "*.toml.tmpl": "ini",
     "*.sh.tmpl": "shellscript",
-    "dot_*rc": "shellscript"
+    "dot_*rc": "shellscript",
+    "dot_*rc.tmpl": "shellscript"
   }
 }
