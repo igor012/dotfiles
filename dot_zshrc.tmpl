@@ -40,7 +40,6 @@ source $ZSH/oh-my-zsh.sh
 # Common
 [[ -f ${HOME}/.p10k.zsh ]] && source ${HOME}/.p10k.zsh
 [[ -f ${HOME}/.fzf.zsh ]] && source ${HOME}/.fzf.zsh
-[[ -f ${HOMEBREW_PREFIX}/etc/brew-wrap ]] && source ${HOMEBREW_PREFIX}/etc/brew-wrap
 [[ -f ${HOME}/.zsh/extract.plugin.zsh ]] && source ${HOME}/.zsh/extract.plugin.zsh
 
 az_version=$(awk -F "=" '/azure-cli/ { print $2 }' ${HOME}/.brew_list)
