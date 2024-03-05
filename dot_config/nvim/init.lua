@@ -58,6 +58,8 @@ vim.cmd('Plug \'plasticboy/vim-markdown\'')
 vim.cmd('Plug \'airblade/vim-gitgutter\'')
 vim.cmd('Plug \'Mofiqul/dracula.nvim\'')
 vim.cmd('Plug \'folke/twilight.nvim\'')
+vim.cmd('Plug \'nvim-lua/plenary.nvim\'')
+vim.cmd('Plug \'nvim-pack/nvim-spectre\'')
 vim.cmd('call plug#end()')
 
 vim.cmd('colorscheme dracula')
