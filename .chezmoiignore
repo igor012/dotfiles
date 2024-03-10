@@ -1,5 +1,5 @@
 #
-
+install.sh
 {{- if eq .chezmoi.os "windows" }}
 .zshrc
 .oh-my-zsh/**
