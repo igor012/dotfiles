@@ -1,5 +1,6 @@
 #
 install.sh
+fonts
 {{- if eq .chezmoi.os "windows" }}
 .zshrc
 .oh-my-zsh/**
@@ -8,6 +9,6 @@ install.sh
 .zshenv
 {{- end }}
 
-{{ if eq .chezmoi.os "linux" }}
+{{ if or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") }}
 AppData/**
 {{- end }}
