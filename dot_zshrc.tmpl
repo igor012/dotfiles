@@ -113,6 +113,11 @@ function getproc {
     ps aux |grep -i ${proc}
 }
 
+function macupdate {
+        chezmoi update
+        omz update
+        softwareupdate -i -a
+}
 
 ######## TEST ########
 
