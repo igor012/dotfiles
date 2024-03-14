@@ -114,9 +114,13 @@ function getproc {
 }
 
 function macupdate {
-        chezmoi update
-        omz update
-        softwareupdate -i -a
+    case $1 in
+            chezmoi) chezmoi update;;
+            omz) omz update;;
+            mac) softwareupdate -i -a;;
+            all) chezmoi update; omz update; softwareupdate -i -a;;
+            *) exit 1;;
+    esac
 }
 
 ######## TEST ########
