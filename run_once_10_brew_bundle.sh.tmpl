@@ -4,27 +4,16 @@
 set -eufo pipefail
 
 brew bundle --no-lock --file=/dev/stdin <<EOF
-tap "azure/functions"
-tap "azure/kubelogin"
-tap "homebrew/bundle"
-tap "instrumenta/instrumenta"
-tap "koekeishiya/formulae"
-tap "tidbyt/tidbyt"
-tap "warrensbox/tap"
 brew "act"
 brew "age"
-brew "ansible"
-brew "ansible-lint"
-brew "brotli"
 brew "argon2"
 brew "arkade"
 brew "aspell"
-brew "m4"
 brew "autoconf"
-brew "python@3.11"
 brew "azure-cli"
+brew "azure/functions/azure-functions-core-tools@4"
 brew "binutils"
-brew "fontconfig"
+brew "brotli"
 brew "ccat"
 brew "cfssl"
 brew "chezmoi"
@@ -35,26 +24,19 @@ brew "curl"
 brew "diffutils"
 brew "direnv"
 brew "dive"
-brew "dockutil"
 brew "dos2unix"
 brew "ed"
-brew "python-tabulate"
-brew "protobuf"
-brew "esphome"
 brew "exiftool"
 brew "faas-cli"
 brew "ffind"
-brew "libevent"
-brew "libarchive"
-brew "libsodium"
 brew "findutils"
 brew "flex"
+brew "fontconfig"
 brew "fping"
 brew "freetds"
 brew "fzf"
 brew "gawk"
 brew "gd"
-brew "git-lfs"
 brew "gnu-indent"
 brew "gnu-sed"
 brew "gnu-tar"
@@ -73,9 +55,12 @@ brew "krew"
 brew "kubeconform"
 brew "kustomize"
 brew "less"
+brew "libarchive"
+brew "libevent"
 brew "liblinear"
 brew "libpcap"
 brew "libpq"
+brew "libsodium"
 brew "libuv"
 brew "libwebsockets"
 brew "libzip"
@@ -85,9 +70,8 @@ brew "lsd"
 brew "lsusb"
 brew "lua@5.3"
 brew "m-cli"
+brew "m4"
 brew "make"
-brew "mercurial"
-brew "qt"
 brew "ncdu"
 brew "neovim"
 brew "nmap"
@@ -95,9 +79,12 @@ brew "node"
 brew "openssl@1.1"
 brew "pkg-config"
 brew "podman"
+brew "protobuf"
 brew "pwgen"
-brew "pyenv"
 brew "pyenv-virtualenv"
+brew "pyenv"
+brew "python-tabulate"
+brew "python@3.11"
 brew "qpdf"
 brew "screen"
 brew "socat"
@@ -112,61 +99,58 @@ brew "trivy"
 brew "up"
 brew "vim"
 brew "vivid"
+brew "warrensbox/tap/tfswitch"
 brew "watch"
 brew "wdiff"
 brew "wget"
 brew "z"
 brew "zip"
 brew "zsh-history-substring-search"
-brew "azure/functions/azure-functions-core-tools@4"
-brew "azure/kubelogin/kubelogin"
-brew "koekeishiya/formulae/yabai"
-brew "tidbyt/tidbyt/pixlet"
-brew "warrensbox/tap/tfswitch"
-cask "arduino", args: { appdir: "/Applications" }
-cask "azure-data-studio", args: { appdir: "/Applications" }
-cask "bitwarden", args: { appdir: "/Applications" }
-cask "bluetility", args: { appdir: "/Applications" }
-cask "chromedriver", args: { appdir: "/Applications" }
-cask "darktable", args: { appdir: "/Applications" }
-cask "discord", args: { appdir: "/Applications" }
-cask "drawio"
-cask "hiddenbar"
 cask "alt-tab"
-cask "Stats"
-cask "dropbox", args: { appdir: "/Applications" }
+cask "azure-data-studio", args: { appdir: "/Applications" }
+cask "drawio"
 cask "firefox", args: { appdir: "/Applications" }
 cask "google-chrome", args: { appdir: "/Applications" }
 cask "google-cloud-sdk"
-cask "google-drive"
+cask "hiddenbar"
 cask "hyper"
 cask "keepingyouawake"
-cask "kindle", args: { appdir: "/Applications" }
 cask "maccy", args: { appdir: "/Applications" }
 cask "mark-text", args: { appdir: "/Applications" }
-cask "microsoft-auto-update"
-cask "microsoft-azure-storage-explorer"
-cask "microsoft-remote-desktop"
-cask "microsoft-teams"
 cask "mitmproxy"
-cask "multipass"
-cask "nordvpn", args: { appdir: "/Applications" }
-cask "onedrive"
-cask "podman-desktop"
 cask "postman"
 cask "powershell", args: { appdir: "/Applications" }
+cask "rectangle"
+cask "Stats"
+cask "sublime-text"
+cask "visual-studio-code", args: { appdir: "/Applications" }
+tap "azure/functions"
+tap "azure/kubelogin"
+tap "homebrew/bundle"
+tap "instrumenta/instrumenta"
+tap "koekeishiya/formulae"
+tap "tidbyt/tidbyt"
+tap "warrensbox/tap"
+EOF
+
+{{ if eq .purpose "personal" }}
+echo "Installing personal packages"
+brew bundle --no-lock --file=/dev/stdin <<EOF
+brew "esphome"
+cask "nordvpn", args: { appdir: "/Applications" }
 cask "prusaslicer", args: { appdir: "/Applications" }
 cask "qflipper", args: { appdir: "/Applications" }
 cask "raspberry-pi-imager"
-cask "rectangle"
-cask "skype", args: { appdir: "/Applications" }
 cask "steam", args: { appdir: "/Applications" }
-cask "sublime-text"
-cask "transmit", args: { appdir: "/Applications" }
-cask "visual-studio-code", args: { appdir: "/Applications" }
-cask "vlc", args: { appdir: "/Applications" }
 cask "wireshark", args: { appdir: "/Applications" }
+cask "vlc", args: { appdir: "/Applications" }
+cask "discord", args: { appdir: "/Applications" }
+cask "bluetility", args: { appdir: "/Applications" }
+cask "bitwarden", args: { appdir: "/Applications" }
+cask "arduino", args: { appdir: "/Applications" }
+cask "kindle", args: { appdir: "/Applications" }
 EOF
+{{ end }}
 
 brew cleanup
 
