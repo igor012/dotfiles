@@ -22,8 +22,6 @@ vim.o.tabstop = 2
 vim.cmd('filetype plugin indent on')
 vim.cmd('syntax on')
 
-vim.o.t_Co = '256'
-
 -- True color if available
 local term_program = os.getenv('TERM_PROGRAM')
 
