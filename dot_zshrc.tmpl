@@ -79,6 +79,16 @@ function gproject {
     done
 }
 
+
+function fzf-gproject {
+    gcp_project=$(gcloud projects list --format json | jq -r '.[] | .projectId' | fzf)
+    gcloud config set project $gcp_project
+    echo "Active GCP Project : $gcp_project"
+    break
+    done
+}
+
+
 function glogin {
     CRED_PATH="${HOME}/.config/gcloud/creds/sa/"
     select creds in $(gfind ${CRED_PATH} -type f ); do
