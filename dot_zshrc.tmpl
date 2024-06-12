@@ -72,7 +72,7 @@ alias hg='history | grep '
 ### GCP ###
 function gproject {
     select gcp_project in $(
-        gcloud projects list --format json | jq -r '.[] | .projectId' ); do
+         gcloud projects list --format json | jq -r '.[] | select (.projectId | contains("sys-") | not).projectId'); do
             gcloud config set project $gcp_project
             echo "Active GCP Project : $gcp_project"
     break
@@ -84,8 +84,6 @@ function fzf-gproject {
     gcp_project=$(gcloud projects list --format json | jq -r '.[] | .projectId' | fzf)
     gcloud config set project $gcp_project
     echo "Active GCP Project : $gcp_project"
-    break
-    done
 }
 
 
