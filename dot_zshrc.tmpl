@@ -30,8 +30,8 @@ plop() {
 # Linux Configuration
 plugins+=(brew)
 plop() {
-        plop=$(mktemp --directory --suffix '-plop' -p /var/tmp)
-        cd $plop
+    plop=$(mktemp --directory --suffix '-plop' -p /var/tmp)
+    cd $plop
 }
 {{- end }}
 
@@ -56,7 +56,7 @@ command -v pyenv >/dev/null || export PATH="${PYENV_ROOT}/bin:${PATH}"
 
 export AZURE_DEV_COLLECT_TELEMETRY="no"
 export PAGER="cat"
-export PATH="${PATH}:/usr/local/sbin:/home/linuxbrew/.linuxbrew/bin:/${HOME}/.local/bin:$HOME/bin:${HOME}/.bin/:${HOME}/.azure/bin"
+export PATH="${PATH}:/usr/local/sbin:/home/linuxbrew/.linuxbrew/bin:/${HOME}/.local/bin:$HOME/bin:${HOME}/.bin/:${HOME}/.azure/bin:${HOME}/.homebrew/bin"
 export PYENV_ROOT="${HOME}/.pyenv"
 export GOPATH="${HOME}/.go"
 export LESS="-F -X ${LESS}"
@@ -72,9 +72,9 @@ alias hg='history | grep '
 ### GCP ###
 function gproject {
     select gcp_project in $(
-         gcloud projects list --format json | jq -r '.[] | select (.projectId | contains("sys-") | not).projectId'); do
-            gcloud config set project $gcp_project
-            echo "Active GCP Project : $gcp_project"
+        gcloud projects list --format json | jq -r '.[] | select (.projectId | contains("sys-") | not).projectId'); do
+        gcloud config set project $gcp_project
+        echo "Active GCP Project : $gcp_project"
     break
     done
 }
