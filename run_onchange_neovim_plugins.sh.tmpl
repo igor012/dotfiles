@@ -2,7 +2,7 @@
 #!/bin/bash
 
 
-# init.lua hash: {{ include "dot_config/nvim/init.lua" | sha256sum }}
+init.lua hash: {{ include "dot_config/nvim/init.lua" | sha256sum }}
 nvim +'PlugInstall --sync' +qa
 
 {{- end -}}

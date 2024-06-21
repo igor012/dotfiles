@@ -49,8 +49,7 @@ az_version=$(awk -F "=" '/azure-cli/ { print $2 }' ${HOME}/.brew_list)
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
 
-eval "$(pyenv init -)"
-eval "$(direnv hook zsh)"
+
 
 command -v pyenv >/dev/null || export PATH="${PYENV_ROOT}/bin:${PATH}"
 
@@ -152,3 +151,6 @@ function help {
 
 }
 
+eval "$(pyenv init -)"
+
+eval "$(direnv hook zsh)"
