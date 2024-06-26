@@ -13,7 +13,7 @@ export ZSH="${HOME}/.oh-my-zsh"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 # HIST_STAMPS="yyyy/mm/dd"
-plugins=(git fzf ansible direnv podman docker-compose terraform tmux kubectl gcloud vagrant zsh-syntax-highlighting z kubectx)
+plugins=(git fzf ansible direnv podman docker-compose terraform kubectl gcloud vagrant zsh-syntax-highlighting z kubectx)
 
 {{- if eq .chezmoi.os "darwin" }}
 # Darwin Configuration
@@ -141,6 +141,14 @@ function sdig {
 }
 
 
+######## HTTP ########
+
+function rehttp {
+    local url=$1
+    curl -sS -D - ${url}  -o /dev/null
+}
+
+
 ######## TEST ########
 
 function help {
@@ -150,6 +158,53 @@ function help {
     esac
 
 }
+
+##### PASS ####
+
+prodctx() {
+  tsh login --proxy=teleport.passculture.team:443 --auth=github
+  tsh kube ls
+  tsh kube login passculture-metier-prod
+  kubectl config use-context teleport.passculture.team-passculture-metier-prod
+  kubectl config set-context --current --namespace=production
+}
+ehpctx() {
+  tsh login --proxy=teleport.ehp.passculture.team:443 --auth=github
+  tsh kube ls
+  tsh kube login passculture-metier-ehp
+  kubectl config use-context teleport.ehp.passculture.team-passculture-metier-ehp
+  kubectl config set-context --current --namespace=staging
+}
+opsctx() {
+  tsh login --proxy=teleport.ops.passculture.team:443 --auth=github
+  tsh kube ls
+  tsh kube login passculture-metier-ops
+  kubectl config use-context teleport.ops.passculture.team-passculture-metier-ops
+}
+opsproxy() {
+  gcloud compute ssh proxy-001 --project passculture-metier-ops --zone europe-west1-b -- -L 8888:localhost:8888 -N -q -f
+}
+infractx() {
+  tsh login --proxy=teleport.infra.passculture.team:443 --auth=github
+  tsh kube ls
+  tsh kube login passculture-infra-prod
+  kubectl config use-context teleport.infra.passculture.team-passculture-infra-prod
+}
+dataehpctx() {
+  tsh login --proxy=teleport.data.ehp.passculture.team:443 --auth=github
+  tsh kube ls
+  tsh kube login passculture-data-ehp
+  kubectl config use-context teleport.data.ehp.passculture.team-passculture-data-ehp
+}
+dataprodctx() {
+  tsh login --proxy=teleport.data.passculture.team:443 --auth=github
+  tsh kube ls
+  tsh kube login passculture-data-prod
+  kubectl config use-context teleport.data.passculture.team-passculture-data-prod
+}
+
+
+
 
 eval "$(pyenv init -)"
 
