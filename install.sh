@@ -6,9 +6,11 @@ echo ""
 echo "🤚  This script will setup .dotfiles for you."
 read -n 1 -r -s -p $'    Press any key to continue or Ctrl+C to abort...\n\n'
 
+HOMEBREW_DIR="${HOME}/.homebrew"
+
 # Install Homebrew
 command -v brew >/dev/null 2>&1 ||
-    (echo '🍺  Installing Homebrew' && /bin/bash -c "$(git clone https://github.com/Homebrew/brew ${HOME}.homebrew)")
+    (echo '🍺  Installing Homebrew' && /bin/bash -c "$(git clone https://github.com/Homebrew/brew ${HOMEBREW_DIR}")
 
 export PATH=${PATH}:${HOME}/.homebrew/bin
 

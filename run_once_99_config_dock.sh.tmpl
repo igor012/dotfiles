@@ -1,24 +1,23 @@
 {{- if eq .chezmoi.os "darwin" -}}
 #!/bin/bash
 
-set -eufo pipefail
-# remove old dock items
-dockutil --remove all
+# set -eufo pipefail
+# # remove old dock items
+# dockutil --remove all
 
-# add new dock items
-apps=(
-    Firefox
-    'Google Chrome'
-    'Visual Studio Code'
-    'Slack'
-    'Hyper'
-    'Sublime Text'
-    draw.io
-)
+# # add new dock items
+# apps=(
+#     Firefox
+#     'Google Chrome'
+#     'Safari'
+#     'Visual Studio Code'
+#     'Slack'
+#     draw.io
+# )
 
-echo "Adding apps to dock"
-for app in "${apps[@]}"; do
-    dockutil --add "/Applications/${app}.app" --no-restart
-done
+# echo "Adding apps to dock"
+# for app in "${apps[@]}"; do
+#     dockutil --add "/Applications/${app}.app" --no-restart
+# done
 
 {{- end -}}
