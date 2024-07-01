@@ -94,17 +94,15 @@ brew "pwgen"
 brew "pyenv-virtualenv"
 brew "pyenv"
 brew "qpdf"
-# brew "screen"
-# brew "socat"
-# brew "stern"
-# brew "switch-lan-play"
+brew "socat"
+brew "stern"
 brew "terragrunt"
 brew "terraform-docs"
 brew "tflint"
 brew "the_silver_searcher"
 brew "tig"
 brew "tmux"
-# brew "trivy"
+
 brew "up"
 brew "vivid"
 brew "warrensbox/tap/tfswitch"
@@ -114,40 +112,33 @@ brew "wget"
 brew "z"
 brew "zip"
 brew "zsh-history-substring-search"
-# cask "alt-tab"
-# cask "azure-data-studio", args: { appdir: "/Applications" }
 cask "drawio"
-cask "firefox", args: { appdir: "/Applications" }
-cask "google-chrome", args: { appdir: "/Applications" }
+cask "firefox"
+cask "google-chrome"
 cask "google-cloud-sdk"
-# cask "hiddenbar"
-# cask "hyper"
 cask "keepingyouawake"
-cask "maccy", args: { appdir: "/Applications" }
-# cask "mark-text", args: { appdir: "/Applications" }
+cask "maccy"
 # cask "mitmproxy"
 cask "postman"
-# cask "powershell", args: { appdir: "/Applications" }
 cask "rectangle"
 cask "Slack"
 cask "Stats"
-# cask "sublime-text"
-cask "visual-studio-code", args: { appdir: "/Applications" }
+cask "visual-studio-code"
 
 EOF
 
 # {{ if eq .purpose "personal" }}
 # echo "Installing personal packages"
 # brew bundle --no-lock --file=/dev/stdin <<EOF
-# cask "nordvpn", args: { appdir: "/Applications" }
-# cask "prusaslicer", args: { appdir: "/Applications" }
-# cask "qflipper", args: { appdir: "/Applications" }
+# cask "nordvpn"
+# cask "prusaslicer"
+# cask "qflipper"
 # cask "raspberry-pi-imager"
-# cask "steam", args: { appdir: "/Applications" }
-# cask "vlc", args: { appdir: "/Applications" }
-# cask "discord", args: { appdir: "/Applications" }
-# cask "bluetility", args: { appdir: "/Applications" }
-# cask "bitwarden", args: { appdir: "/Applications" }
+# cask "steam"
+# cask "vlc"
+# cask "discord"
+# cask "bluetility"
+# cask "bitwarden"
 # EOF
 # {{ end }}
 

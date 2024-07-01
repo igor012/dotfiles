@@ -383,6 +383,9 @@ defaults write com.apple.dock wvous-tr-modifier -int 0
 defaults write com.apple.dock wvous-bl-corner -int 0
 defaults write com.apple.dock wvous-bl-modifier -int 0
 
+defaults write com.apple.dock wvous-br-corner -int 0
+defaults write com.apple.dock wvous-br-modifier -int 0
+
 # ###############################################################################
 # # Time Machine                                                                #
 # ###############################################################################
@@ -469,8 +472,8 @@ for app in "Activity Monitor" \
 	"cfprefsd" \
 	"Dock" \
 	"Finder" \
+	"Firefox" \
 	"Google Chrome" \
-	"Photos" \
 	"SystemUIServer"; do
 	killall "${app}" &> /dev/null
 done
