@@ -1,0 +1,297 @@
+#############################
+#   ______ _____ _    _ _   #
+#  |___  // ____| |  | | |  #
+#     / /| (___ | |__| | |  #
+#    / /  \___ \|  __  | |  #
+#   / /__ ____) | |  | |_|  #
+#  /_____|_____/|_|  |_(_)  #
+#                           #
+#############################
+
+# plugins=(git fzf ansible direnv podman docker-compose terraform kubectl gcloud vagrant zsh-syntax-highlighting z kubectx)
+
+{{- if eq .chezmoi.os "darwin" }}
+# Darwin Configuration
+# alias ls="gls --color=auto"
+
+plop() {
+    plop=$(mktemp --directory -t 'plop' -p /var/tmp)
+    cd $plop
+}
+{{- end }}
+
+{{- if eq .chezmoi.os "linux" }}
+# Linux Configuration
+
+plop() {
+    plop=$(mktemp --directory --suffix '-plop' -p /var/tmp)
+    cd $plop
+}
+{{- end }}
+
+
+######## ZSH configuration ########
+### Plugins ###
+
+[[ -f ${HOME}/.fzf.zsh ]] && source ${HOME}/.fzf.zsh
+
+# SHELL CONFIGURATION
+
+export PATH="${PATH}:/usr/local/sbin:/home/linuxbrew/.linuxbrew/bin:/${HOME}/.local/bin:$HOME/bin:${HOME}/.bin/:${HOME}/.azure/bin:${HOME}/.homebrew/bin:${HOME}/.homebrew/sbin:${HOME}:${HOME}/google-cloud-sdk/bin"
+export LESS="-F -X ${LESS}"
+export ls='eza'
+# export LS_COLORS="$(vivid generate snazzy)"
+export EDITOR="nvim"
+export PAGER="cat"
+alias j="z"
+alias vim="nvim"
+alias hg='history | grep '
+
+if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
+    eval "$(oh-my-posh init zsh --config ${HOME}/.config/oh-my-posh/catppuccin.omp.json)"
+fi
+
+source "${HOME}/.local/share/zinit/zinit.zsh"
+
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
+
+# Add in snippets
+zinit snippet OMZP::git
+zinit snippet OMZP::sudo
+zinit snippet OMZP::archlinux
+zinit snippet OMZP::aws
+zinit snippet OMZP::kubectl
+zinit snippet OMZP::kubectx
+zinit snippet OMZP::command-not-found
+zinit snippet OMZP::docker
+zinit snippet OMZP::docker-compose
+zinit snippet OMZP::gcloud
+zinit snippet OMZP::fzf
+
+autoload -Uz compinit && compinit
+
+zinit cdreplay -q
+
+# History
+HISTSIZE=50000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
+
+
+### KEY BINDINGS ###
+# Setup bindings for both smkx and rmkx key variants
+# Home
+bindkey '\e[H'  beginning-of-line
+bindkey '\eOH'  beginning-of-line
+# End
+bindkey '\e[F'  end-of-line
+bindkey '\eOF'  end-of-line
+# Up
+# bindkey '\e[A' up-line-or-beginning-search
+# bindkey '\eOA' up-line-or-beginning-search
+# # Down
+# bindkey '\e[B' down-line-or-beginning-search
+# bindkey '\eOB' down-line-or-beginning-search
+# # Left
+# bindkey '\e[D' backward-char
+# bindkey '\eOD' backward-char
+# # Right
+# bindkey '\e[C' forward-char
+# bindkey '\eOC' forward-char
+# # Delete
+# bindkey '\e[3~' delete-char
+# # Backspace
+# bindkey '\e?' backward-delete-char
+# # PageUp
+# bindkey '\e[5~' up-line-or-history
+# # PageDown
+# bindkey '\e[6~' down-line-or-history
+# # Ctrl+Left
+# bindkey '\e[1;5D' backward-word
+# # Ctrl+Right
+# bindkey '\e[1;5C' forward-word
+# # Shift+Tab
+# bindkey '\e[Z' reverse-menu-complete
+
+### DIRENV ###
+eval "$(direnv hook zsh)"
+
+### PYTHON ###
+command -v pyenv >/dev/null || export PATH="${PYENV_ROOT}/bin:${PATH}"
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+export PYENV_ROOT="${HOME}/.pyenv"
+eval "$(pyenv init -)"
+
+### GOLANG ###
+export GOPATH="${HOME}/.go"
+
+
+
+
+######## CLOUD ########
+
+### GCP ###
+if test ${GCP}; then
+
+    function fzf-gproject {
+        gcp_project=$(gcloud projects list --format json | jq -r '.[] | .projectId' | fzf)
+        gcloud config set project $gcp_project
+        echo "Active GCP Project : $gcp_project"
+    }
+
+    function gproject {
+        select gcp_project in $(
+            gcloud projects list --format json | \
+                jq -r '.[] | select (.projectId | contains("sys-") | not).projectId'
+            ); do
+            gcloud config set project $gcp_project
+            echo "Active GCP Project : $gcp_project"
+        break
+        done
+    }
+
+
+
+    function glogin {
+        CRED_PATH="${HOME}/.config/gcloud/creds/sa/"
+        select creds in $(gfind ${CRED_PATH} -type f ); do
+            export GOOGLE_APPLICATION_CREDENTIALS=$CRED_PATH/$creds
+            export GOOGLE_CREDENTIALS=$CRED_PATH/$creds
+            echo "Active GCP Creds : $creds"
+        break
+        done
+    }
+
+fi
+
+### AZURE ###
+if test ${_AZURE}; then
+
+    export AZURE_DEV_COLLECT_TELEMETRY="no"
+    function az_login_work {
+        export AZURE_CONFIG_DIR=~/.az
+        az login --use-device-code
+    }
+
+    function az_login_personal {
+        export AZURE_CONFIG_DIR=~/.azpersonal
+        az login --use-device-code
+    }
+fi
+
+######## TOOLING ########
+
+
+#### HELM ####
+source <(helm completion zsh)
+
+### SYSTEM ###
+
+function getproc {
+    local proc=$1
+    ps aux |grep -i ${proc}
+}
+
+function macupdate {
+    function chezmoi_update() { chezmoi update }
+    function omz_update() { omz update }
+    function macos_update() { softwareupdate -i -a }
+    case $1 in
+            chezmoi) chezmoi_update;;
+            omz) omz_update;;
+            mac) macos_update;;
+            all) chezmoi_update; omz_update; macos_update;;
+            *) exit 1;;
+    esac
+}
+
+### GIT ###
+alias gitroot='cd $(git rev-parse --show-toplevel)'
+
+
+# Gitignore
+function gi() {
+    curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ ;
+}
+
+
+
+### DNS ###
+function sdig {
+    local record=$1
+    local type=$2
+    dig -t ${2} +nostats +nocomments +nocmd ${1}
+}
+
+### HTTP ###
+
+function rehttp {
+    local url=$1
+    curl -sS -D - ${url}  -o /dev/null
+}
+
+######## TEST ########
+
+function help {
+    local func_name=$1
+    case $func_name in
+        "lol") echo "lol" ;;
+    esac
+
+}
+
+##### PASS ####
+
+prodctx() {
+  tsh login --proxy=teleport.passculture.team:443 --auth=github
+  tsh kube ls
+  tsh kube login passculture-metier-prod
+  kubectl config use-context teleport.passculture.team-passculture-metier-prod
+  kubectl config set-context --current --namespace=production
+}
+ehpctx() {
+  tsh login --proxy=teleport.ehp.passculture.team:443 --auth=github
+  tsh kube ls
+  tsh kube login passculture-metier-ehp
+  kubectl config use-context teleport.ehp.passculture.team-passculture-metier-ehp
+  kubectl config set-context --current --namespace=staging
+}
+opsctx() {
+  tsh login --proxy=teleport.ops.passculture.team:443 --auth=github
+  tsh kube ls
+  tsh kube login passculture-metier-ops
+  kubectl config use-context teleport.ops.passculture.team-passculture-metier-ops
+}
+opsproxy() {
+  gcloud compute ssh proxy-001 --project passculture-metier-ops --zone europe-west1-b -- -L 8888:localhost:8888 -N -q -f
+}
+infractx() {
+  tsh login --proxy=teleport.infra.passculture.team:443 --auth=github
+  tsh kube ls
+  tsh kube login passculture-infra-prod
+  kubectl config use-context teleport.infra.passculture.team-passculture-infra-prod
+}
+dataehpctx() {
+  tsh login --proxy=teleport.data.ehp.passculture.team:443 --auth=github
+  tsh kube ls
+  tsh kube login passculture-data-ehp
+  kubectl config use-context teleport.data.ehp.passculture.team-passculture-data-ehp
+}
+dataprodctx() {
+  tsh login --proxy=teleport.data.passculture.team:443 --auth=github
+  tsh kube ls
+  tsh kube login passculture-data-prod
+  kubectl config use-context teleport.data.passculture.team-passculture-data-prod
+}

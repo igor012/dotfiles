@@ -1,0 +1,22 @@
+[".local/share/zinit"]
+type = "git-repo"
+url = "https://github.com/zdharma-continuum/zinit.git"
+refreshPeriod = "168h"
+stripComponents = 1
+
+[".fzf"]
+type = "git-repo"
+url = "https://github.com/junegunn/fzf.git"
+refreshPeriod = "168h"
+stripComponents = 1
+
+[".tmux/plugins/tpm"]
+type = "git-repo"
+url = "https://github.com/tmux-plugins/tpm"
+refreshPeriod = "168h"
+stripComponents = 0
+
+[".config/nvim"]
+type = "git-repo"
+url = "https://github.com/igor012/kickstart.nvim"
+refreshPeriod = "1h"

@@ -1,10 +1,9 @@
 #
+bootstrap.sh
 install.sh
 fonts
 {{- if eq .chezmoi.os "windows" }}
 .zshrc
-.oh-my-zsh/**
-.p10k.zsh
 .tmux.conf
 .zshenv
 {{- end }}
