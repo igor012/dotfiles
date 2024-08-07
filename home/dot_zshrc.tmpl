@@ -8,11 +8,10 @@
 #                           #
 #############################
 
-# plugins=(git fzf ansible direnv podman docker-compose terraform kubectl gcloud vagrant zsh-syntax-highlighting z kubectx)
+# This file is managed by chezmoi. Do not edit directly.
 
 {{- if eq .chezmoi.os "darwin" }}
 # Darwin Configuration
-# alias ls="gls --color=auto"
 
 plop() {
     plop=$(mktemp --directory -t 'plop' -p /var/tmp)
@@ -28,54 +27,70 @@ plop() {
     cd $plop
 }
 {{- end }}
+zmodload -i zsh/complist
+bindkey -M menuselect '^M' .accept-line
 
 
-######## ZSH configuration ########
 ### Plugins ###
 
-[[ -f ${HOME}/.fzf.zsh ]] && source ${HOME}/.fzf.zsh
+# [[ -f ${HOME}/.fzf.zsh ]] && source ${HOME}/.fzf.zsh
 
-# SHELL CONFIGURATION
+######## SHELL CONFIGURATION ########
 
 export PATH="${PATH}:/usr/local/sbin:/home/linuxbrew/.linuxbrew/bin:/${HOME}/.local/bin:$HOME/bin:${HOME}/.bin/:${HOME}/.azure/bin:${HOME}/.homebrew/bin:${HOME}/.homebrew/sbin:${HOME}:${HOME}/google-cloud-sdk/bin"
 export LESS="-F -X ${LESS}"
-export ls='eza'
 # export LS_COLORS="$(vivid generate snazzy)"
 export EDITOR="nvim"
 export PAGER="cat"
+export LS_OPTIONS="--color=auto --icons"
+
+######## ZSH configuration ########
+bindkey -v
+bindkey '^R' history-incremental-search-backward
+
+
+### Antidote ###
+source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
+
+
+# ${ZDOTDIR:-~}/.zshrc
+
+# Set the root name of the plugins files (.txt and .zsh) antidote will use.
+zsh_plugins=${ZDOTDIR:-~}/.zsh_plugins
+zmodload -i zsh/complist
+# Ensure the .zsh_plugins.txt file exists so you can add plugins.
+[[ -f ${zsh_plugins}.txt ]] || touch ${zsh_plugins}.txt
+
+# Lazy-load antidote from its functions directory.
+fpath=(/path/to/antidote/functions $fpath)
+autoload -Uz antidote
+
+# Generate a new static file whenever .zsh_plugins.txt is updated.
+if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
+  antidote bundle <${zsh_plugins}.txt >|${zsh_plugins}.zsh
+fi
+
+# Source your static plugins file.
+source ${zsh_plugins}.zsh
+
+
+
 alias j="z"
 alias vim="nvim"
 alias hg='history | grep '
+
+alias ls="eza --color=auto"
+alias ll="eza -l ${LS_OPTIONS}"
+alias la="eza -la ${LS_OPTIONS}"
+alias l="eza -l ${LS_OPTIONS}"
 
 if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
     eval "$(oh-my-posh init zsh --config ${HOME}/.config/oh-my-posh/catppuccin.omp.json)"
 fi
 
-source "${HOME}/.local/share/zinit/zinit.zsh"
 
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-zinit light Aloxaf/fzf-tab
 
-# Add in snippets
-zinit snippet OMZP::git
-zinit snippet OMZP::sudo
-zinit snippet OMZP::archlinux
-zinit snippet OMZP::aws
-zinit snippet OMZP::kubectl
-zinit snippet OMZP::kubectx
-zinit snippet OMZP::command-not-found
-zinit snippet OMZP::docker
-zinit snippet OMZP::docker-compose
-zinit snippet OMZP::gcloud
-zinit snippet OMZP::fzf
-
-autoload -Uz compinit && compinit
-
-zinit cdreplay -q
-
-# History
+######## History ########
 HISTSIZE=50000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
@@ -98,34 +113,9 @@ bindkey '\eOH'  beginning-of-line
 # End
 bindkey '\e[F'  end-of-line
 bindkey '\eOF'  end-of-line
-# Up
-# bindkey '\e[A' up-line-or-beginning-search
-# bindkey '\eOA' up-line-or-beginning-search
-# # Down
-# bindkey '\e[B' down-line-or-beginning-search
-# bindkey '\eOB' down-line-or-beginning-search
-# # Left
-# bindkey '\e[D' backward-char
-# bindkey '\eOD' backward-char
-# # Right
-# bindkey '\e[C' forward-char
-# bindkey '\eOC' forward-char
-# # Delete
-# bindkey '\e[3~' delete-char
-# # Backspace
-# bindkey '\e?' backward-delete-char
-# # PageUp
-# bindkey '\e[5~' up-line-or-history
-# # PageDown
-# bindkey '\e[6~' down-line-or-history
-# # Ctrl+Left
-# bindkey '\e[1;5D' backward-word
-# # Ctrl+Right
-# bindkey '\e[1;5C' forward-word
-# # Shift+Tab
-# bindkey '\e[Z' reverse-menu-complete
 
-### DIRENV ###
+
+## DIRENV ###
 eval "$(direnv hook zsh)"
 
 ### PYTHON ###
@@ -134,10 +124,8 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PYENV_ROOT="${HOME}/.pyenv"
 eval "$(pyenv init -)"
 
-### GOLANG ###
+# ### GOLANG ###
 export GOPATH="${HOME}/.go"
-
-
 
 
 ######## CLOUD ########
@@ -195,7 +183,7 @@ fi
 
 
 #### HELM ####
-source <(helm completion zsh)
+# source <(helm completion zsh)
 
 ### SYSTEM ###
 
@@ -220,13 +208,10 @@ function macupdate {
 ### GIT ###
 alias gitroot='cd $(git rev-parse --show-toplevel)'
 
-
 # Gitignore
 function gi() {
     curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ ;
 }
-
-
 
 ### DNS ###
 function sdig {
@@ -254,44 +239,75 @@ function help {
 
 ##### PASS ####
 
-prodctx() {
-  tsh login --proxy=teleport.passculture.team:443 --auth=github
-  tsh kube ls
-  tsh kube login passculture-metier-prod
-  kubectl config use-context teleport.passculture.team-passculture-metier-prod
-  kubectl config set-context --current --namespace=production
+function helppass {
+    local function_name=$1
+
+    case $function_name in
+        "prodctx") _prodctx ;;
+        "ehpctx") _ehpctx ;;
+        "opsctx") _opsctx ;;
+        "opsproxy") _opsproxy ;;
+        "infractx") _infractx ;;
+        "dataehpctx") _dataehpctx ;;
+        "dataprodctx") _dataprodctx ;;
+        *) echo "No function found" ;;
+    esac
+
+    _prodctx() {
+        tsh login --proxy=teleport.passculture.team:443 --auth=github
+        tsh kube ls
+        tsh kube login passculture-metier-prod
+        kubectl config use-context teleport.passculture.team-passculture-metier-prod
+        kubectl config set-context --current --namespace=production
+    }
+
+    _ehpctx() {
+        tsh login --proxy=teleport.ehp.passculture.team:443 --auth=github
+        tsh kube ls
+        tsh kube login passculture-metier-ehp
+        kubectl config use-context teleport.ehp.passculture.team-passculture-metier-ehp
+        kubectl config set-context --current --namespace=staging
+    }
+
+    _opsctx() {
+        tsh login --proxy=teleport.ops.passculture.team:443 --auth=github
+        tsh kube ls
+        tsh kube login passculture-metier-ops
+        kubectl config use-context teleport.ops.passculture.team-passculture-metier-ops
+    }
+
+    _opsproxy() {
+        gcloud compute ssh proxy-001 --project passculture-metier-ops --zone europe-west1-b -- -L 8888:localhost:8888 -N -q -f
+    }
+
+    _infractx() {
+        tsh login --proxy=teleport.infra.passculture.team:443 --auth=github
+        tsh kube ls
+        tsh kube login passculture-infra-prod
+        kubectl config use-context teleport.infra.passculture.team-passculture-infra-prod
+    }
+
+    _dataehpctx() {
+        tsh login --proxy=teleport.data.ehp.passculture.team:443 --auth=github
+        tsh kube ls
+        tsh kube login passculture-data-ehp
+        kubectl config use-context teleport.data.ehp.passculture.team-passculture-data-ehp
+    }
+
+    _dataprodctx() {
+        tsh login --proxy=teleport.data.passculture.team:443 --auth=github
+        tsh kube ls
+        tsh kube login passculture-data-prod
+        kubectl config use-context teleport.data.passculture.team-passculture-data-prod
+    }
 }
-ehpctx() {
-  tsh login --proxy=teleport.ehp.passculture.team:443 --auth=github
-  tsh kube ls
-  tsh kube login passculture-metier-ehp
-  kubectl config use-context teleport.ehp.passculture.team-passculture-metier-ehp
-  kubectl config set-context --current --namespace=staging
-}
-opsctx() {
-  tsh login --proxy=teleport.ops.passculture.team:443 --auth=github
-  tsh kube ls
-  tsh kube login passculture-metier-ops
-  kubectl config use-context teleport.ops.passculture.team-passculture-metier-ops
-}
-opsproxy() {
-  gcloud compute ssh proxy-001 --project passculture-metier-ops --zone europe-west1-b -- -L 8888:localhost:8888 -N -q -f
-}
-infractx() {
-  tsh login --proxy=teleport.infra.passculture.team:443 --auth=github
-  tsh kube ls
-  tsh kube login passculture-infra-prod
-  kubectl config use-context teleport.infra.passculture.team-passculture-infra-prod
-}
-dataehpctx() {
-  tsh login --proxy=teleport.data.ehp.passculture.team:443 --auth=github
-  tsh kube ls
-  tsh kube login passculture-data-ehp
-  kubectl config use-context teleport.data.ehp.passculture.team-passculture-data-ehp
-}
-dataprodctx() {
-  tsh login --proxy=teleport.data.passculture.team:443 --auth=github
-  tsh kube ls
-  tsh kube login passculture-data-prod
-  kubectl config use-context teleport.data.passculture.team-passculture-data-prod
-}
+
+
+PROFILE_STARTUP=false
+if [[ "$PROFILE_STARTUP" == true ]]; then
+    zmodload zsh/zprof
+    # http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
+    PS4=$'%D{%M%S%.} %N:%i> '
+    exec 3>&2 2>$HOME/startlog.$$
+    setopt xtrace prompt_subst
+fi
